@@ -1,0 +1,33 @@
+﻿# Compiled Java Class Files
+*.class
+backend/target/
+**/target/
+
+# Python Cache & Virtual Environments
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+env/
+venv/
+.venv/
+
+# IDE & Editor Files
+.idea/
+*.iml
+.classpath
+.project
+.settings/
+.vscode/launch.json
+
+# OS and Logs
+*.log
+.DS_Store
+Thumbs.db
+backend_stdout.log
+backend_stderr.log
+spring_stdout.log
+spring_stderr.log
+java_out.log
+java_err.log
+backend_run.log
