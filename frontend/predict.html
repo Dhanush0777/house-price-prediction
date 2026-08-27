@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predict Property Price | EstateAI Predictor</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
+                <i class="fa-solid fa-house-chimney text-warning fs-4"></i>
+                <span>Estate<span class="text-info">AI</span></span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarMain">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 gap-1">
+                    <li class="nav-item"><a class="nav-link" href="index.html"><i class="fa-solid fa-house me-1"></i> Home</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="predict.html"><i class="fa-solid fa-calculator me-1"></i> Predict Price</a></li>
+                    <li class="nav-item"><a class="nav-link" href="dashboard.html"><i class="fa-solid fa-chart-pie me-1"></i> Analytics</a></li>
+                    <li class="nav-item"><a class="nav-link" href="history.html"><i class="fa-solid fa-clock-rotate-left me-1"></i> History</a></li>
+                    
+                    
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header Banner -->
+    <div class="bg-primary text-white py-4 shadow-sm" style="background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+                <div>
+                    <h2 class="fw-bold mb-1"><i class="fa-solid fa-calculator text-warning me-2"></i> House Price Predictor</h2>
+                    <p class="text-light mb-0 opacity-75">Provide property specifications to generate instant machine learning valuations</p>
+                </div>
+                <div>
+                    <a href="history.html" class="btn btn-outline-light btn-sm"><i class="fa-solid fa-clock-rotate-left me-1"></i> View Saved Queries</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Prediction Section -->
+    <main class="container my-5">
+        <div class="row g-4">
+            <!-- Property Input Form Card -->
+            <div class="col-lg-6">
+                <div class="custom-card">
+                    <div class="card-header-custom d-flex align-items-center justify-content-between">
+                        <span class="fs-5"><i class="fa-solid fa-sliders me-2"></i> Property Details Form</span>
+                        <span class="badge bg-warning text-dark"><i class="fa-solid fa-wand-magic-sparkles"></i> AI Powered</span>
+                    </div>
+                    <div class="p-4">
+                        <!-- Alert Container -->
+                        <div id="alertContainer"></div>
+
+                        <form id="predictionForm" onsubmit="handlePredictionSubmit(event)">
+                            <div class="mb-3">
+                                <label class="form-label" for="locationInput">
+                                    <i class="fa-solid fa-location-dot text-danger me-1"></i> Locality / Neighborhood
+                                </label>
+                                <select class="form-select" id="locationInput" required>
+                                    <option value="" disabled selected>Loading locations from ML service...</option>
+                                </select>
+                                <small class="text-muted">Select from 10 trained prime urban localities</small>
+                            </div>
+
+                            <div class="row g-3 mb-3">
+                                <div class="col-md-6">
+                                    <label class="form-label" for="areaInput">
+                                        <i class="fa-solid fa-ruler-combined text-primary me-1"></i> Built-up Area (Sq.Ft)
+                                    </label>
+                                    <input type="number" class="form-control" id="areaInput" placeholder="e.g. 1500" min="200" max="20000" required>
+                                    <small class="text-muted">Range: 200 – 20,000 sq.ft</small>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label" for="bedroomsInput">
+                                        <i class="fa-solid fa-bed text-info me-1"></i> Bedrooms (BHK)
+                                    </label>
+                                    <select class="form-select" id="bedroomsInput" required>
+                                        <option value="1">1 BHK</option>
+                                        <option value="2">2 BHK</option>
+                                        <option value="3" selected>3 BHK</option>
+                                        <option value="4">4 BHK</option>
+                                        <option value="5">5 BHK (Luxury)</option>
+                                    </select>
+                                    <small class="text-muted">Room layout capacity</small>
+                                </div>
+                            </div>
+
+                            <div class="row g-3 mb-3">
+                                <div class="col-md-6">
+                                    <label class="form-label" for="bathroomsInput">
+                                        <i class="fa-solid fa-bath text-secondary me-1"></i> Bathrooms
+                                    </label>
+                                    <select class="form-select" id="bathroomsInput" required>
+                                        <option value="1">1 Bathroom</option>
+                                        <option value="2" selected>2 Bathrooms</option>
+                                        <option value="3">3 Bathrooms</option>
+                                        <option value="4">4 Bathrooms</option>
+                                        <option value="5">5 Bathrooms</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label" for="parkingInput">
+                                        <i class="fa-solid fa-square-parking text-success me-1"></i> Parking Spaces
+                                    </label>
+                                    <select class="form-select" id="parkingInput" required>
+                                        <option value="0">0 (None)</option>
+                                        <option value="1" selected>1 Car Parking</option>
+                                        <option value="2">2 Cars</option>
+                                        <option value="3">3+ Cars</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row g-3 mb-4">
+                                <div class="col-md-6">
+                                    <label class="form-label" for="ageInput">
+                                        <i class="fa-solid fa-calendar-days text-warning me-1"></i> Property Age (Years)
+                                    </label>
+                                    <input type="number" class="form-control" id="ageInput" placeholder="e.g. 5" min="0" max="100" value="3" required>
+                                    <small class="text-muted">0 = Brand New Construction</small>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label" for="floorsInput">
+                                        <i class="fa-solid fa-building text-dark me-1"></i> Total Floors
+                                    </label>
+                                    <input type="number" class="form-control" id="floorsInput" placeholder="e.g. 2" min="1" max="50" value="2" required>
+                                    <small class="text-muted">Building floor level</small>
+                                </div>
+                            </div>
+
+                            <div class="d-grid gap-2">
+                                <button type="submit" id="btnPredict" class="btn btn-primary-custom btn-lg">
+                                    <span id="btnPredictSpinner" class="spinner-border spinner-border-sm me-2 d-none" role="status"></span>
+                                    <span id="btnPredictText"><i class="fa-solid fa-calculator me-2"></i> Compute Estimated Valuation</span>
+                                </button>
+                                <button type="button" class="btn btn-outline-secondary" onclick="resetForm()">
+                                    <i class="fa-solid fa-arrow-rotate-left me-1"></i> Reset Fields
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Prediction Result Card -->
+            <div class="col-lg-6">
+                <div id="resultCard" class="result-card h-100 flex-column justify-content-between">
+                    <div>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="badge bg-light text-dark px-3 py-2 fw-bold">
+                                <i class="fa-solid fa-check-circle text-success me-1"></i> AI Valuation Generated
+                            </span>
+                            <span class="small opacity-75" id="resTimestamp">Just now</span>
+                        </div>
+
+                        <h5 class="fw-normal mb-1 opacity-90">Estimated Fair Market Valuation</h5>
+                        <div class="price-display mb-2" id="resPrice">₹0</div>
+                        <h4 class="text-warning fw-bold mb-4" id="resPriceLakhs">₹0 Lakhs</h4>
+
+                        <h6 class="fw-bold mb-3 text-light border-bottom border-success pb-2">
+                            <i class="fa-solid fa-list-ul me-2"></i> Property Parameter Summary
+                        </h6>
+
+                        <div class="d-flex flex-wrap gap-2 mb-4">
+                            <span class="spec-badge"><i class="fa-solid fa-location-dot text-danger"></i> <span id="resLoc">-</span></span>
+                            <span class="spec-badge"><i class="fa-solid fa-ruler-combined text-info"></i> <span id="resArea">-</span> sq.ft</span>
+                            <span class="spec-badge"><i class="fa-solid fa-bed text-warning"></i> <span id="resBed">-</span> BHK</span>
+                            <span class="spec-badge"><i class="fa-solid fa-bath text-info"></i> <span id="resBath">-</span> Baths</span>
+                            <span class="spec-badge"><i class="fa-solid fa-car text-success"></i> <span id="resPark">-</span> Parking</span>
+                            <span class="spec-badge"><i class="fa-solid fa-clock text-warning"></i> <span id="resAge">-</span> Yrs Old</span>
+                            <span class="spec-badge"><i class="fa-solid fa-building"></i> <span id="resFloors">-</span> Floors</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="mt-3 pt-3 border-top border-success d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+                            <span class="small opacity-75">
+                                <i class="fa-solid fa-shield-halved me-1"></i> Algorithm: <strong id="resModel">Gradient Boosting Regressor</strong>
+                            </span>
+                            <span class="badge bg-black bg-opacity-30 border border-success">
+                                Saved to MySQL Ledger #<span id="resId">1</span>
+                            </span>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <a href="history.html" class="btn btn-sm btn-light fw-bold flex-grow-1">
+                                <i class="fa-solid fa-clock-rotate-left me-1"></i> View in History
+                            </a>
+                            <a href="dashboard.html" class="btn btn-sm btn-outline-light fw-bold flex-grow-1">
+                                <i class="fa-solid fa-chart-pie me-1"></i> Analytics
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Placeholder Card before first prediction -->
+                <div id="placeholderCard" class="custom-card h-100 d-flex flex-column align-items-center justify-content-center p-5 text-center text-muted">
+                    <div class="bg-primary bg-opacity-10 text-primary rounded-circle p-4 mb-3">
+                        <i class="fa-solid fa-chart-line fs-1"></i>
+                    </div>
+                    <h4 class="fw-bold text-dark">Ready for Valuation</h4>
+                    <p class="mb-0" style="max-width: 380px;">
+                        Fill in the property details on the left and click <strong>Compute Estimated Valuation</strong> to generate real-time machine learning predictions.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-center">
+        <div class="container">
+            <p class="mb-1 text-light fw-semibold">AI-Based House Price Prediction System &copy; 2026</p>
+            <p class="small text-muted mb-0">High-Performance Real Estate Valuation Platform</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JavaScript -->
+    <script src="js/app.js"></script>
+</body>
+</html>
